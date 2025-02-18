@@ -1,17 +1,11 @@
 {
         "setting": {
-                "//comment": "purpose: prior_training & reconstruction & decolearn & pruning & pnp_parameter_tuning",
                 "purpose": "pruning",
-                "//comment": "purpose: loadANDtraining & newANDtraining",
-                "recon_training_type": "NONE",
-                "//comment": "root_path: ./experimental_results/ dc_acc8",
-                "root_path": "/project/cigserver3/export1/p.youngil/experiment/Stochastic_RW/practice/",
-                "tiff_path": "/deq_acc6_dcOnly_0916_tiff/",
-                "save_folder": "deq_acc6_dcOnly_0916",
-                "gpu_index": "1",
+                "root_path": "./experiment/",
+                "tiff_path": "/deq_acc6_selfsupervised_tiff/",
+                "save_folder": "deq_acc6_selfsupervised_tiff",
                 "mode": "train",
                 "method": "Pruning_Finetuning",
-                "data_path": "../../dataset/dataset/dataset.hdf5",
                 "acceleration_rate": 6,
                 "dataset_type": "RealMeasurement",
                 "du_weightsharing": true,
@@ -21,10 +15,9 @@
         "pruning": {
                 "//comment": "module: CNNBlock & EDSR & DEQ & DU & PNP & ISTANET & VARNET",
                 "module": ["DEQ"],
-                "module_path_deq": "/project/cigserver5/export/p.youngil/CSE400E/model_training_results/For_Pruning/DEQ_ACC6/DEQ_acc6_trainable/recon_model/best_valid_psnr29.pt",
-                "module_path_e2evarnet": "/project/cigserver5/export/p.youngil/CSE400E/models/Model_For_Pruning_Final/varnet_acc6/recon_model/best_valid_psnr.pt",
-                "module_path_varnet": "/project/cigserver5/export/p.youngil/CSE400E/experiment/Model_Training/EZVARNET_ACC6/EZ_ACC6_DCBased/recon_model/best_valid_psnrForDC.pt",
-                "prior_path": "/export/project/p.youngil/CSE400E/models/EDSR_6_PRIOR/recon_model/best_valid_psnr.pt",
+                "module_path_deq": "./pretrained_models/deq_acc6.pt",
+                "module_path_e2evarnet": "./pretrained_models/e2evarnet_acc6.pt",
+                "module_path_varnet": "./pretrained_models/varnet_acc6.pt",
                 "module_loading": true,
                 "usage_of_gt": false,
                 "//comment": "random, l1, lamp, XslimX, group_norm, Xgroup_slX, taylor",
@@ -33,27 +26,12 @@
                 "fine_tuning": true,
                 "fine_tune_with_testset": true,
                 "student_teacher": true,
-                "//commenct": "testdcPLUSschool & school & testdc & supervised",
-                "fine_tune_loss_type": "testdc",
+                "//commenct": "school & selfsupervised & supervised",
+                "fine_tune_loss_type": "selfsupervised",
                 "ch_sparsity": [0.4, 0.3, 0.2, 0.1, 0.05],
                 "iterative_steps": 1
         },
-        "reconstruction": {
-                "//comment": "module: CNNBlock & EDSR & DEQ & DU & PNP & VARNET & ISTANET",
-                "module": "DEQ",
-                "//comment": "module_path: CNNBlock: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_CNN.pt & EDSR: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_EDSR.pt",
-                "save_root_path": "/export/project/p.youngil/CSE400E/saved_model/recon_model/",
-                "module_loading": false
-        },
-        "prior_training": {
-                "//comment": "module: CNNBlock & EDSR & VARNET & ISTANET",
-                "module": "EDSR",
-                "//comment": "module_path: CNNBlock: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_CNN.pt & EDSR: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_EDSR.pt, /export/project/p.youngil/CSE400E/models/EDSR_6_PRIOR_FMRI/recon_model/best_valid_psnr.pt",
-                "save_root_path": "/export/project/p.youngil/CSE400E/prior_model/EDSR_revolution.pt",
-                "prior_path": "/project/cigserver5/export/p.youngil/CSE400E/models/Model_For_Pruning/2_EDSR_13_PRIOR_fmri_Properway/EDSR13_acc8/recon_model/best_valid_psnr.pt",
-                "module_loading": false,
-                "prior_value": 9
-        },
+
         "rei": {
                 "sigma_rei": 0.1,
                 "tau": 1e-2,
