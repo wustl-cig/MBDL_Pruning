@@ -49,18 +49,7 @@ conda activate MBDL_Pruning
   - `configs/e2evarnet_configs.json`
   - `configs/varnet_configs.json`
 
-### 2) Open `yaml` file and customize `# CUSTOMIZE`
-
-```
-# Open up the yaml file that you want to run experiment
-vim {TASK_YAML_FILE_NAME}.yaml
-
-# Only care the line that has `# Attention #`
-gpu:  # CUSTOMIZE 1
-pretrained_check_point:  # CUSTOMIZE 2
-```
-
-### 3) Execute the code
+### 2) Execute the code
 
 ```
 python main.py --task_config configs/{TASK_YAML_FILE_NAME}.yaml    # example code: python main.py --task_config configs/varnet_config.yaml
