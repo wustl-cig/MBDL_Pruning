@@ -1,0 +1,150 @@
+{
+        "setting": {
+                "purpose": "pruning",
+                "recon_training_type": "NONE",
+                "//comment": "root_path: ./experimental_results/ dc_acc8",
+                "root_path": "/project/cigserver3/export1/p.youngil/experiment/Stochastic_RW/practice/",
+                "tiff_path": "/dc_acc6_ezvarnet_onDCTRAINING_0925_tiff/",
+                "save_folder": "dc_acc6_ezvarnet_onDCTRAINING_0925_4",
+                "gpu_index": "1",
+                "mode": "train",
+                "method": "Pruning_Finetuning",
+                "data_path": "../../dataset/dataset/dataset.hdf5",
+                "acceleration_rate": 6,
+                "dataset_type": "RealMeasurement",
+                "du_weightsharing": true,
+                "data_split_ratio": [0.9, 0.05, 0.05],
+                "trainable_parameter": true
+        },
+        "pruning": {
+                "//comment": "module: DEQ & VARNET & EZVARNET",
+                "module": ["VARNET"],
+                "module_path_deq": "/project/cigserver5/export/p.youngil/CSE400E/model_training_results/For_Pruning/DEQ_ACC6/DEQ_acc6_trainable/recon_model/best_valid_psnr29.pt",
+                "module_path_e2evarnet": "/project/cigserver5/export/p.youngil/CSE400E/models/Model_For_Pruning_Final/varnet_acc6/recon_model/best_valid_psnr.pt",
+                "module_path_varnet": "/project/cigserver5/export/p.youngil/CSE400E/experiment/Model_Training/EZVARNET_ACC6/EZ_ACC6_DCBased/recon_model/best_valid_psnrForDC.pt",
+                "prior_path": "/export/project/p.youngil/CSE400E/models/EDSR_6_PRIOR/recon_model/best_valid_psnr.pt",
+                "module_loading": true,
+                "usage_of_gt": false,
+                "//comment": "random, l1, lamp, XslimX, group_norm, Xgroup_slX, taylor",
+                "importance": ["l1"],
+                "data_fidelity": true,
+                "fine_tuning": true,
+                "fine_tune_with_testset": true,
+                "student_teacher": true,
+                "//commenct": "testdcPLUSschool & school & testdc & supervised",
+                "fine_tune_loss_type": "testdc",
+                "ch_sparsity": [0.4],
+                "iterative_steps": 1
+        },
+        "reconstruction": {
+                "//comment": "module: CNNBlock & EDSR & DEQ & DU & PNP & VARNET & ISTANET",
+                "module": "DEQ",
+                "//comment": "module_path: CNNBlock: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_CNN.pt & EDSR: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_EDSR.pt",
+                "save_root_path": "/export/project/p.youngil/CSE400E/saved_model/recon_model/",
+                "module_loading": false
+        },
+        "prior_training": {
+                "//comment": "module: CNNBlock & EDSR & VARNET & ISTANET",
+                "module": "EDSR",
+                "//comment": "module_path: CNNBlock: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_CNN.pt & EDSR: /export/project/p.youngil/CSE400E/Supervised_Tester/prior_model/0.90_EDSR.pt, /export/project/p.youngil/CSE400E/models/EDSR_6_PRIOR_FMRI/recon_model/best_valid_psnr.pt",
+                "save_root_path": "/export/project/p.youngil/CSE400E/prior_model/EDSR_revolution.pt",
+                "prior_path": "/project/cigserver5/export/p.youngil/CSE400E/models/Model_For_Pruning/2_EDSR_13_PRIOR_fmri_Properway/EDSR13_acc8/recon_model/best_valid_psnr.pt",
+                "module_loading": false,
+                "prior_value": 9
+        },
+        "rei": {
+                "sigma_rei": 0.1,
+                "tau": 1e-2,
+                "alpha_req": 1.0
+        },
+
+        "dataset": {
+                "synthetic": {
+                        "sigma": 18,
+
+                        "P": 1966,
+                        "theta": 10,
+                        "translation": [0, 0],
+                        "rotate": 0,
+                        "scale": 0
+                },
+
+                "root_path": "../../dataset/dataset/",
+                "mask_type": "cartesian",
+                "mask_fold": 3,
+                "input_snr": 40,
+                "multi_coil": true
+        },
+
+        "method": {
+                "lambda_": 3.5,
+                "loss_regis_mse": 0,
+                "loss_regis_dice": 0,
+                "loss_regis_ncc": 1,
+
+                "loss_recon_consensus": 1.0,
+
+                "proposed": {
+                        "regis_batch": 1,
+                        "recon_batch": 1,
+
+                        "is_optimize_regis": true
+                }
+        },
+
+        "module": {
+                "regis": {
+                         "nf_enc": [16, 32, 32, 32],
+                         "nf_dec": [32, 32, 32, 32, 32, 16, 16]
+
+                },
+
+                "recon": {
+                        "recon_net": "EDSR",
+
+                        "EDSR": {
+                                "n_resblocks": 13,
+                                "n_feats": 64,
+                                "res_scale": 1
+                        },
+                        "iteration_k": 4,
+                        "mu_list": [0.5],
+                        "gamma_list": [2.3],
+                        "alpha_list": [0.9],
+                        "is_trainable_mu" : false,
+                        "is_trainable_gamma" : false,
+                        "is_trainable_alpha" : false,
+                        "recon_module_type": "red"
+
+                },
+                "DEQ": {
+                        "max_iter": 100,
+                        "tol": 1e-4
+                }
+        },
+
+        "train": {
+                "batch_size":1,
+
+                "num_workers": 0,
+                "verbose_batch": 10,
+                "train_epoch": 150,
+                "checkpoint_epoch": 30,
+                "tensorboard_batch": 50,
+
+                "recon_lr": 1e-4,
+                "regis_lr": 5e-4,
+
+                "recon_loss": "smooth_l1",
+                "regis_loss": null
+        },
+
+        "test": {
+                "recon_checkpoint": "recon_model/best_valid_psnr.pt",
+                "regis_checkpoint": "regis_model/best_valid_psnr.pt",
+
+                "is_save_mat": false,
+                "desc": ""
+
+        }
+}
