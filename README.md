@@ -28,9 +28,9 @@ cd MBDL_Pruning
 
 - Download **Deep Equilibrium Model (DEQ)** trained on the brain fastMRI dataset [Pretrained DEQ link](https://drive.google.com/drive/folders/1jElnRoFv7b31fG0v6pTSQkelbSX3xGZh). The default save directory is `./pretrained_models`.
 
-- Download **End-to-End Variational Network (E2E-VarNet)** trained on the brain fastMRI dataset [Pretrained VP score link](https://drive.google.com/drive/folders/1jElnRoFv7b31fG0v6pTSQkelbSX3xGZh). The default save directory is `./pretrained_models`.
+- Download **End-to-End Variational Network (E2E-VarNet)** trained on the brain fastMRI dataset [Pretrained E2EVarNet link](https://drive.google.com/drive/folders/1jElnRoFv7b31fG0v6pTSQkelbSX3xGZh). The default save directory is `./pretrained_models`.
 
-- Download **Variational Network (VarNet)** trained on the FFHQ 256x256 dataset [Pretrained VE score link](https://drive.google.com/drive/folders/1-2tUJ3tOU2AruyMYPB33x1aWVOQMSygM). The default save directory is `./pretrained_models`.
+- Download **Variational Network (VarNet)** trained on the FFHQ 256x256 dataset [Pretrained VarNet link](https://drive.google.com/drive/folders/1-2tUJ3tOU2AruyMYPB33x1aWVOQMSygM). The default save directory is `./pretrained_models`.
 
 ### 3) Virtual environment setup
 ```
