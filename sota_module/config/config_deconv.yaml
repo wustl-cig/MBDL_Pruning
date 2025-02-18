@@ -1,0 +1,117 @@
+setting:
+
+    save_path: 20230317_warmup_theta_deconv_denoise
+    mode: 'tra'
+
+    method: warmup_theta_deconv
+    dataset: deconv_kernel
+
+    ckpt_path_module: null
+    ckpt_path_trainer: null
+
+dataset:
+
+    is_pre_load: false
+
+    pmri_modl:
+        root_path: /opt/dataset/cache_deq_cal/pmri_MoDL
+        acceleration_rate: 4
+        acs_percentage: 0.175
+        randomly_return: true
+
+        noise_snr: 50
+        num_of_coil: -1
+        birdcage_maps_dim: 2
+        smps_hat_method: esp  # [low_k, esp]
+        low_k_size: 4
+
+    deconv_kernel:
+        root_path: /opt/dataset/cache_deq_cal/deconv_kernel
+        kernel_size: 25
+        sigma_val: 10
+
+method:
+
+    deq_cal:
+
+        x_module: dncnn
+        theta_module: dncnn
+
+        iterations: -1
+
+        x_gamma: 1 # [0.1, 0.5, 1] # [0.05, 0.1, 0.5, 1]
+        x_alpha: 0.1 # [0.1, 0.25] # [0.1, 0.25, 0.5, 1]
+
+        theta_gamma: 0.5 # [0.1, 0.5, 1] # [0.05, 0.1, 0.5, 1]
+        theta_alpha: 0 # [0.1, 0.25] # [0.1, 0.25, 0.5, 1]
+
+        is_update_theta_iteratively: true
+        is_update_theta_iteratively_bc: true
+
+        accelerator: generic  # [generic, nesterov, anderson]
+
+        is_joint_cal: true
+        is_use_gt_theta: false
+
+        loss: ssim
+        max_iter: 500
+        tol: 0.00001
+
+        warmup:
+            x_sigma: 25 # [1, 3, 5, 7, 10, 15, 20, 25] # [1, 3, 5, 7, 10, 15]  # both used for training the warmup CNN and selecting pretrained model to warmup.
+            theta_sigma:  [0.01, 0.05, 0.1, 0.5, 1, 1.5, 2, 2.5, 3] # [1, 3, 5, 7, 10, 15, 20, 25] # [1, 3, 5, 7, 10, 15]
+
+            x_ckpt: denoise # denoise, g_denoise
+            theta_ckpt: denoise
+
+        jacobian_spectral_norm_reg:
+            jacobian_loss_weight: 0.001
+
+            eps_jacobian_loss: 0.1
+
+            power_method_nb_step: 50
+            power_method_error_momentum: 0.
+            power_method_error_threshold: 0.01
+
+    baseline:
+
+        tv:
+            tau: 0.1 # [0.1, 0.025, 0.05, 0.075, 0.01, 0.0025, 0.005, 0.0075, 0.001, 0.00025, 0.0005, 0.00075, 0.0001]
+            iteration: 200
+            gamma: 0.5
+
+module:
+
+    unet:
+        f_root_x: 32
+        f_root_theta: 32
+
+        conv_times: 2
+        up_down_times: 3
+        is_spe_norm: false
+
+    gs_denoiser:
+        grad_matching: true
+        model_name: "DRUNET"
+
+        DRUNET_nc_x: 64
+        DRUNET_nc_cal: 16
+
+    dncnn:
+        num_layers: 17
+
+train:
+
+    lr: 0.00001
+    batch_size: 16
+    max_epochs: 3000
+    every_n_epochs: 1
+    num_workers: 2
+    gradient_clip_val: null
+    is_use_schduler: false
+
+test:
+
+    checkpoint_path: epoch=074_val_loss=0.13696371018886566.ckpt
+    dec: null
+    is_compute_Lip: false

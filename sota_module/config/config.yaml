@@ -1,0 +1,114 @@
+setting:
+
+    save_path: tmp_20221224_pmri_modl_x4_deq_cal
+    mode: 'dug'
+
+    method: deq_cal
+
+    dataset: pmri_modl
+    fwd: pmri
+    cache_id: null  # NOV26_MRI
+
+    ckpt_path_module: null # 20221207_GS_Denoiser_Demo_LR1eN4_grad_matching_True_DynamicSigma_RERUN_Batch8/epoch=829_val_loss=0.0001247701293323189.ckpt
+    ckpt_path_trainer: null
+
+    ray_per_cpu: 2
+    ray_per_gpu: 1
+
+dataset:
+
+    is_pre_load: false
+
+    pmri_modl:
+        root_path: /opt/dataset/cache_deq_cal/pmri_MoDL
+        acceleration_rate: 4
+        noise_snr: 50
+        num_of_coil: 32
+        birdcage_maps_dim: 2
+        smps_hat_method: esp  # esp
+
+method:
+
+    deq_cal:
+
+        x_module: unet
+        theta_module: unet
+
+        accelerator: generic
+
+        type: pnp
+        iterations: -1  #-1: deq; >1: deep unfolding
+
+        gamma: 1
+        alpha: 0.1
+
+        cal_gamma: 0.001  # only for CT cal
+        cal_alpha: 0.001  # only for CT cal
+
+        is_joint_cal: false
+        is_use_gt_theta: false
+
+        is_use_input_cal: true
+
+        loss: ssim
+
+        warmup:
+            x_sigma: 5  # both used for training the warmup CNN and selecting pretrained model to warmup.
+            cal_sigma: 2
+
+            x_ckpt: denoise
+            cal_ckpt: denoise
+
+            is_variable_sigma: false
+            variable_max_sigma: 50
+
+        max_iter: 200
+        tol: 0.001
+
+        jacobian_spectral_norm_reg:
+            jacobian_loss_weight: 0
+
+            eps_jacobian_loss: 0.1
+
+            power_method_nb_step: 50
+            power_method_error_momentum: 0.
+            power_method_error_threshold: 0.01
+
+    baseline:
+
+        tv:
+            tau: 0.1 # [0.1, 0.025, 0.05, 0.075, 0.01, 0.0025, 0.005, 0.0075, 0.001, 0.00025, 0.0005, 0.00075, 0.0001]
+            iteration: 200
+            gamma: 0.5
+
+module:
+
+    unet:
+        f_root_x: 32
+        f_root_theta: 32
+
+        conv_times: 2
+        up_down_times: 3
+        is_spe_norm: true
+
+    gs_denoiser:
+        grad_matching: true
+        model_name: "DRUNET"
+        DRUNET_nc_x: 64
+        DRUNET_nc_cal: 16
+
+train:
+
+    lr: 0.0001
+    batch_size: 1
+    max_epochs: 200
+    every_n_epochs: 1
+    num_workers: 2
+    gradient_clip_val: null
+    is_use_schduler: false
+
+test:
+
+    checkpoint_path: last.ckpt
+    dec: null
+    is_compute_Lip: false
