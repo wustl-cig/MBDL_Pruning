@@ -23,7 +23,11 @@ git clone https://github.com/wustl-cig/MBDL_Pruning
 cd MBDL_Pruning
 ```
 
-### 2) Download Pretrained Models
+### 2) Download fastMRI dataset
+
+- Download **T2 Brain dataset** from [fastMRI dataset](https://fastmri.med.nyu.edu/). Test data will be released soon.
+
+### 3) Download Pretrained Models
 
 
 - Download **Deep Equilibrium Model (DEQ)** trained on the brain fastMRI dataset [Pretrained DEQ link](https://drive.google.com/file/d/1xAI3P8VJvZablVbm0i-6Ll7Iymmrr8Oj/view?usp=sharing). The default save directory is `./pretrained_models`.
@@ -32,7 +36,7 @@ cd MBDL_Pruning
 
 - Download **Variational Network (VarNet)** trained on the FFHQ 256x256 dataset [Pretrained VarNet link](https://drive.google.com/file/d/1xAI3P8VJvZablVbm0i-6Ll7Iymmrr8Oj/view?usp=sharing). The default save directory is `./pretrained_models`.
 
-### 3) Virtual environment setup
+### 4) Virtual environment setup
 ```
 conda env create -f MBDL_Pruning.yml
 
