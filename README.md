@@ -26,11 +26,11 @@ cd MBDL_Pruning
 ### 2) Download Pretrained Models
 
 
-- Download **Deep Equilibrium Model (DEQ)** trained on the brain fastMRI dataset [Pretrained DEQ link](https://drive.google.com/drive/folders/1jElnRoFv7b31fG0v6pTSQkelbSX3xGZh). The default save directory is `./pretrained_models`.
+- Download **Deep Equilibrium Model (DEQ)** trained on the brain fastMRI dataset [Pretrained DEQ link](https://drive.google.com/file/d/1xAI3P8VJvZablVbm0i-6Ll7Iymmrr8Oj/view?usp=sharing). The default save directory is `./pretrained_models`.
 
-- Download **End-to-End Variational Network (E2E-VarNet)** trained on the brain fastMRI dataset [Pretrained E2EVarNet link](https://drive.google.com/drive/folders/1jElnRoFv7b31fG0v6pTSQkelbSX3xGZh). The default save directory is `./pretrained_models`.
+- Download **End-to-End Variational Network (E2E-VarNet)** trained on the brain fastMRI dataset [Pretrained E2EVarNet link](https://drive.google.com/file/d/1xAI3P8VJvZablVbm0i-6Ll7Iymmrr8Oj/view?usp=sharing). The default save directory is `./pretrained_models`.
 
-- Download **Variational Network (VarNet)** trained on the FFHQ 256x256 dataset [Pretrained VarNet link](https://drive.google.com/drive/folders/1-2tUJ3tOU2AruyMYPB33x1aWVOQMSygM). The default save directory is `./pretrained_models`.
+- Download **Variational Network (VarNet)** trained on the FFHQ 256x256 dataset [Pretrained VarNet link](https://drive.google.com/file/d/1xAI3P8VJvZablVbm0i-6Ll7Iymmrr8Oj/view?usp=sharing). The default save directory is `./pretrained_models`.
 
 ### 3) Virtual environment setup
 ```
